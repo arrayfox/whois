@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WHOIS</title>
+    
+    <!-- Favicon using a Data URI (simple SVG example) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
+    <!-- You can also link to an external image: -->
+    <!-- <link rel="icon" href="https://example.com/your-icon.png" type="image/png"> -->
+    
+    <meta name="theme-color" content="#c3073f"> <!-- Match your primary color -->
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>WHOIS Lookup</h1>
+        </header>
+
+        <main>
+            <form id="whoisForm">
+                <div class="input-group">
+                    <input type="text" id="domainInput" placeholder="e.g., google.com" required>
+                    <button type="submit" id="searchButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <span>Search</span>
+                    </button>
+                </div>
+            </form>
+
+            <div id="loadingIndicator" class="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Fetching WHOIS data...</p>
+            </div>
+
+            <div id="resultsContainer" aria-live="polite" aria-atomic="true">
+                <p class="initial-message">Enter a domain name above to see WHOIS data.</p>
+                <!-- Results will be injected here -->
+            </div>
+
+            <div id="errorContainer" class="error-message" role="alert" aria-live="assertive" aria-atomic="true">
+                <!-- Error messages will be shown here -->
+            </div>
+        </main>
+
+        <footer>
+            <p>© <span id="currentYear"></span> All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="config.js"></script> <!-- Load config first -->
+    <script src="script.js"></script>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

@@ -1,0 +1,383 @@
+:root {
+    --bg-color: #1a1a1d; /* Dark background */
+    --primary-color: #c3073f; /* Accent red */
+    --secondary-color: #6f2232; /* Darker red */
+    --text-color: #f0f0f0; /* Light text */
+    --input-bg: #2c2c31; /* Dark input background */
+    --border-color: #4b5563;
+    --card-bg: #252528;
+    --font-family: 'Inter', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+}
+
+header p {
+    font-size: 1.1rem;
+    color: #a0a0a0;
+}
+
+.input-group {
+    display: flex;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+#domainInput {
+    flex-grow: 1;
+    padding: 15px 20px;
+    font-size: 1rem;
+    border: 1px solid var(--border-color);
+    border-right: none;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    outline: none;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+#domainInput::placeholder {
+    color: #888;
+}
+
+#searchButton {
+    padding: 15px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+#searchButton:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+}
+
+#searchButton:hover:not(:disabled) {
+    background-color: var(--secondary-color);
+}
+
+#searchButton svg {
+    stroke: white;
+}
+
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: #a0a0a0;
+}
+
+.spinner {
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    border-left-color: var(--primary-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 10px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+#resultsContainer, #errorContainer {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    padding: 25px;
+    margin-top: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    min-height: 50px; 
+
+    /* Styles for transition */
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out, visibility 0s 0.4s;
+    visibility: hidden; 
+}
+
+#resultsContainer.visible, #errorContainer.visible {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    transition-delay: 0s; 
+}
+
+/* Specific styling for error container if needed, inheriting from above */
+#errorContainer {
+    color: var(--text-color); /* Ensure text color is set */
+    /* background-color: #382323; /* Error-specific background, can be adjusted */
+    /* border-left: 5px solid #e53e3e; Already handled by error-message class */
+}
+
+.initial-message {
+    color: #888;
+    text-align: center;
+    padding: 20px 0;
+    font-style: italic;
+}
+
+.result-section {
+    margin-bottom: 25px;
+}
+.result-section:last-child {
+    margin-bottom: 0;
+}
+
+.result-section h3 {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+}
+
+/* Key Dates Section Styles */
+.key-dates-section {
+    background-color: var(--secondary-color); 
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.key-dates-section h3 {
+    color: var(--text-color); 
+    border-bottom: 2px solid var(--primary-color);
+    margin-top: 0;
+}
+
+.key-dates-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.key-date-item {
+    background-color: var(--card-bg); 
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+}
+
+.key-date-label {
+    font-size: 0.9rem;
+    color: #a0a0a0;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.key-date-value {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+/* Status Badge Styles */
+.status-badges-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: white;
+    background-color: #555; 
+    border: 1px solid #777;
+    text-transform: lowercase;
+}
+
+.status-badge.status-ok {
+    background-color: #28a745; 
+    border-color: #1e7e34;
+}
+
+.status-badge.status-prohibited, .status-badge.status-lock {
+    background-color: #dc3545; 
+    border-color: #b02a37;
+}
+
+.status-badge.status-pending {
+    background-color: #ffc107; 
+    color: #333;
+    border-color: #d39e00;
+}
+.status-badge.status-warning { 
+    background-color: #fd7e14; 
+    border-color: #c66511;
+}
+
+/* Result Item Styles */
+.result-item {
+    display: flex;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+
+.result-item dt {
+    font-weight: 400;
+    color: #b0b0b0;
+    min-width: 150px; 
+    flex-shrink: 0;
+    margin-right: 10px;
+}
+
+.result-item dd {
+    word-break: break-word;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.result-item dd ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 5px;
+}
+.result-item dd ul li {
+    margin-bottom: 4px;
+    font-weight: normal;
+}
+
+.result-item dd a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+.result-item dd a:hover {
+    text-decoration: underline;
+}
+
+/* Styling for multiple contact entries */
+.contact-entry-header {
+    font-weight: 500;
+    color: var(--text-color);
+    opacity: 0.85;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed var(--border-color);
+    font-size: 1rem;
+}
+.contact-entry-header:first-of-type { 
+    margin-top: 5px;
+}
+
+
+/* Error Message and Info Message specific styling */
+.error-message { /* This class is on #errorContainer by default in HTML */
+    border-left: 5px solid #e53e3e; 
+    background-color: #382323;
+}
+.info-message { /* This class is added by JS for info messages */
+    border-left: 5px solid #3182ce; 
+    background-color: #233138;
+}
+/* Ensure the generic #errorContainer styles (for transition) don't override the specific background for these */
+#errorContainer.error-message, #errorContainer.info-message {
+    /* Backgrounds are already set by the specific classes */
+}
+
+
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+    color: #888;
+    font-size: 0.9rem;
+}
+
+footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    header p {
+        font-size: 1rem;
+    }
+    .input-group {
+        flex-direction: column;
+    }
+    #domainInput {
+        border-right: 1px solid var(--border-color);
+        border-bottom: none;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        border-bottom-left-radius: 0;
+    }
+    #searchButton {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        justify-content: center;
+    }
+    .result-item {
+        flex-direction: column;
+    }
+    .result-item dt {
+        margin-bottom: 5px;
+        color: var(--primary-color); 
+    }
+    .key-dates-list {
+        grid-template-columns: 1fr; /* Single column on mobile for key dates */
+    }
+}
